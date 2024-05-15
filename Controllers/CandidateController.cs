@@ -36,7 +36,7 @@ namespace ApplicationForm.Controllers
             }
 
             var questions = await _cosmosDbService.GetQuestionsAsync(query, parameters);
-            return Ok(questions.Select(q => new QuestionDto
+            var questionDtos = questions.Select(q => new QuestionDto
             {
                 Content = q.Content,
                 Type = q.Type,
@@ -44,7 +44,9 @@ namespace ApplicationForm.Controllers
                 MinValue = q.MinValue,
                 MaxValue = q.MaxValue,
                 Placeholder = q.Placeholder
-            }));
+            }).ToList();
+
+            return Ok(questionDtos);
         }
 
         [HttpPost("SubmitResponses")]
