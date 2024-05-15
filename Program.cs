@@ -26,6 +26,13 @@ builder.Services.AddSingleton<CosmosClient>(serviceProvider => {
 var containerNames = cosmosDbSettings.GetSection("Containers").GetChildren()
     .ToDictionary(x => x.Key, x => x.Value);
 
+builder.Services.AddScoped<ICosmosDbService, CosmosDbService>(serviceProvider =>
+{
+    var client = serviceProvider.GetRequiredService<CosmosClient>();
+    var databaseName = cosmosDbSettings["DatabaseName"];
+    return new CosmosDbService(client, databaseName, containerNames);
+});
+
 // Register the ApplicationDetailsService with necessary parameters
 builder.Services.AddScoped<IApplicationDetailsService, ApplicationDetailsService>(serviceProvider => {
     var client = serviceProvider.GetRequiredService<CosmosClient>();
@@ -55,3 +62,30 @@ app.MapControllerRoute(
     pattern: "{controller=Home}/{action=Index}/{id?}");
 
 app.Run();
+
+// Corrected method declaration
+static async Task<ICosmosDbService> InitializeCosmosClientInstanceAsync(IConfigurationSection configurationSection)
+{
+    string databaseName = configurationSection["DatabaseName"];
+    var containerSettings = configurationSection.GetSection("Containers").GetChildren()
+        .ToDictionary(x => x.Key, x => x.Value);
+    string accountEndpoint = configurationSection["AccountEndpoint"];
+    string authKey = configurationSection["AccountKey"];
+
+    if (string.IsNullOrEmpty(accountEndpoint) || string.IsNullOrEmpty(authKey))
+    {
+        throw new ArgumentException("Cosmos DB account endpoint or auth key is not provided.");
+    }
+
+    CosmosClient client = new CosmosClient(accountEndpoint, authKey);
+    await client.CreateDatabaseIfNotExistsAsync(databaseName);
+
+    foreach (var containerSetting in containerSettings)
+    {
+        var containerName = containerSetting.Key;
+        var partitionKeyPath = containerSetting.Value;
+        await client.GetDatabase(databaseName).CreateContainerIfNotExistsAsync(containerName, partitionKeyPath);
+    }
+
+    return new CosmosDbService(client, databaseName, containerSettings);
+}

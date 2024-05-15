@@ -1,0 +1,388 @@
+{
+	"info": {
+		"_postman_id": "0f599919-df2e-457a-a410-05dd35a1e7cf",
+		"name": "Application Form",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "28045528"
+	},
+	"item": [
+		{
+			"name": "Employer - application",
+			"item": [
+				{
+					"name": "add_app",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "tenant",
+								"value": "malinda",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"TenantId\": \"10\",\r\n    \"personalInformation\": {\r\n        \"firstName\": \"Malinda\",\r\n        \"lastName\": \"Gamage\",\r\n        \"email\": \"malinda.gamage@gmail.com\",\r\n        \"phone\": \"0711451023\",\r\n        \"gender\": \"Male\",\r\n        \"idNumber\": \"971321300V\",\r\n        \"nationality\": \"Sri Lankan\",\r\n        \"currentResidence\": \"Sri lanka\"\r\n    },\r\n    \"answers\": [\r\n        {\r\n            \"questionId\": \"1\",\r\n            \"answerText\": \"Yes\",\r\n            \"textAnswer\": \"Additional text answer\",\r\n            \"selectedOptions\": [\r\n                \"Option1\",\r\n                \"Option2\"\r\n            ]\r\n        }\r\n    ],\r\n    \"hasBeenRejectedByUKEmbassy\": false,\r\n    \"rejectionExplanation\": \"\"\r\n}"
+						},
+						"url": {
+							"raw": "http://localhost:5246/ApplicationDetails",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5246",
+							"path": [
+								"ApplicationDetails"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get_app by App id",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:5246/ApplicationDetails/{{id}}?tenantId={{tenantId}}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5246",
+							"path": [
+								"ApplicationDetails",
+								"{{id}}"
+							],
+							"query": [
+								{
+									"key": "tenantId",
+									"value": "{{tenantId}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete app",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:5246/ApplicationDetails/{{id}}?tenantId={{tenantId}}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5246",
+							"path": [
+								"ApplicationDetails",
+								"{{id}}"
+							],
+							"query": [
+								{
+									"key": "tenantId",
+									"value": "{{tenantId}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update app",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": \"{{id}}\",\r\n    \"tenantId\": \"{{tenantId}}\",\r\n    \"personalInformation\": {\r\n        \"firstName\": \"John\",\r\n        \"lastName\": \"Gamage\",\r\n        \"email\": \"john.doe@example.com\",\r\n        \"phone\": \"1234567890\",\r\n        \"gender\": \"Male\",\r\n        \"idNumber\": \"ID1234567\",\r\n        \"nationality\": \"Nationality\",\r\n        \"currentResidence\": \"CountryName\",\r\n        \"dateOfBirth\": \"0001-01-01\"\r\n    },\r\n    \"answers\": [\r\n        {\r\n            \"questionId\": \"1\",\r\n            \"answerText\": \"Yes\",\r\n            \"textAnswer\": \"Additional text answer\",\r\n            \"selectedOptions\": [\r\n                \"Option1\",\r\n                \"Option2\"\r\n            ]\r\n        }\r\n    ],\r\n    \"hasBeenRejectedByUKEmbassy\": false,\r\n    \"rejectionExplanation\": \"\"\r\n}"
+						},
+						"url": {
+							"raw": "http://localhost:5246/ApplicationDetails/{{id}}?tenantId={{tenantId}}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5246",
+							"path": [
+								"ApplicationDetails",
+								"{{id}}"
+							],
+							"query": [
+								{
+									"key": "tenantId",
+									"value": "{{tenantId}}"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Employer - Question",
+			"item": [
+				{
+					"name": "Add Question",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"Content\": \"What is your favorite color?\",\r\n    \"Type\": \"SingleChoice\",\r\n    \"Options\": [\"Red\", \"Blue\", \"Green\", \"Yellow\"],\r\n    \"MinValue\": 0,\r\n    \"MaxValue\": 0,\r\n    \"Placeholder\": \"Choose a color\"\r\n}"
+						},
+						"url": {
+							"raw": "http://localhost:5246/Employer/AddQuestion",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5246",
+							"path": [
+								"Employer",
+								"AddQuestion"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Question by q.id",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:5246/Employer/GetQuestion/{{id}}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5246",
+							"path": [
+								"Employer",
+								"GetQuestion",
+								"{{id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Question",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"Content\": \"What is your favorite fruit?\",\r\n    \"Type\": \"SingleChoice\",\r\n    \"Options\": [\"Apple\", \"Banana\", \"Orange\", \"Grape\"],\r\n    \"MinValue\": 0,\r\n    \"MaxValue\": 0,\r\n    \"Placeholder\": \"Choose a fruit\"\r\n}"
+						},
+						"url": {
+							"raw": "http://localhost:5246/Employer/UpdateQuestion/{{id}}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5246",
+							"path": [
+								"Employer",
+								"UpdateQuestion",
+								"{{id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Question",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:5246/Employer/DeleteQuestion/{{id}}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5246",
+							"path": [
+								"Employer",
+								"DeleteQuestion",
+								"{{id}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Candidate - Application and Questions",
+			"item": [
+				{
+					"name": "get-question by type",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:5246/Candidate/GetQuestions?type=SingleChoice",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5246",
+							"path": [
+								"Candidate",
+								"GetQuestions"
+							],
+							"query": [
+								{
+									"key": "type",
+									"value": "SingleChoice"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "submit response",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "[\r\n    {\r\n        \"QuestionId\": \"e27cd2d1-91d8-463e-ac7e-64c32062e405\",\r\n        \"AnswerText\": \"Blue\",\r\n        \"SelectedOptions\": [\"Red\", \"Blue\"]\r\n    },\r\n    {\r\n        \"QuestionId\": \"32674460-8135-4289-842b-46af91f1bae9\",\r\n        \"AnswerText\": \"Apple\",\r\n        \"SelectedOptions\": [\"Apple\", \"Banana\"]\r\n    }\r\n]"
+						},
+						"url": {
+							"raw": "http://localhost:5246/Candidate/SubmitResponses",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5246",
+							"path": [
+								"Candidate",
+								"SubmitResponses"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "SubmitApplication",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"TenantId\": \"10\",\r\n    \"PersonalInformation\": {\r\n        \"FirstName\": \"Malinda\",\r\n        \"LastName\": \"Gamage\",\r\n        \"Email\": \"Malinda.Gamage@gmail.com\",\r\n        \"Phone\": \"0711451023\",\r\n        \"Gender\": \"Male\",\r\n        \"IdNumber\": \"971321300V\",\r\n        \"Nationality\": \"Sri Lankan\",\r\n        \"CurrentResidence\": \"Sri Lanka\"\r\n    },\r\n    \"Answers\": [\r\n        {\r\n            \"QuestionId\": \"e27cd2d1-91d8-463e-ac7e-64c32062e405\",\r\n            \"AnswerText\": \"Blue\",\r\n            \"SelectedOptions\": [\"Red\", \"Blue\"]\r\n        },\r\n        {\r\n            \"QuestionId\": \"32674460-8135-4289-842b-46af91f1bae9\",\r\n            \"AnswerText\": \"Apple\",\r\n            \"SelectedOptions\": [\"Apple\", \"Banana\"]\r\n        }\r\n    ],\r\n    \"HasBeenRejectedByUKEmbassy\": false,\r\n    \"RejectionExplanation\": \"\"\r\n}"
+						},
+						"url": {
+							"raw": "http://localhost:5246/Candidate/SubmitApplication",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5246",
+							"path": [
+								"Candidate",
+								"SubmitApplication"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get application by app id",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:5246/Candidate/GetApplicationById/{{id}}?tenantId={{tenantId}}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5246",
+							"path": [
+								"Candidate",
+								"GetApplicationById",
+								"{{id}}"
+							],
+							"query": [
+								{
+									"key": "tenantId",
+									"value": "{{tenantId}}"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
